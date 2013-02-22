@@ -3,12 +3,23 @@
 // 
 // 22-02-2013
 // 
-var template = function(id){
+
+(function(){
+
+	window.App = {
+		Models : {},
+		Collections : {},
+		Views : {}
+	}
+
+
+
+window.template = function(id){
 	return _.template( $('#' + id).html() );
 }
 
 //person model
-var Person = Backbone.Model.extend({
+App.Models.Person = Backbone.Model.extend({
 	defaults : {
 		nombre : "Daniel",
 		apellido : "Silva",
@@ -31,12 +42,12 @@ var Person = Backbone.Model.extend({
 });
 
 //list of people
-var PeopleCollection = Backbone.Collection.extend({
-	model : Person
+App.Collections.People = Backbone.Collection.extend({
+	model : App.Models.Person
 });
 
 // people view
-var PeopleView = Backbone.View.extend({
+App.Views.People = Backbone.View.extend({
 	tagName : 'ul',
 
 	className : 'people-list',
@@ -44,7 +55,7 @@ var PeopleView = Backbone.View.extend({
 	render : function(){
 	// for each create a new person view
 		this.collection.each(function(person){
-			var personView = new PersonView({model : person});
+			var personView = new App.Views.Person({model : person});
 
 			this.$el.append(personView.render().el);
 
@@ -56,7 +67,7 @@ var PeopleView = Backbone.View.extend({
 })
 
 //person view
-var PersonView = Backbone.View.extend({
+App.Views.Person = Backbone.View.extend({
 
 	tagName: "li",
 
@@ -74,7 +85,7 @@ var PersonView = Backbone.View.extend({
 
 });
 
-var  peopleCollection = new PeopleCollection([
+var peopleCollection = new App.Collections.People([
 {
 	nombre : 'Daniel',
 	apellido : 'silva',
@@ -95,8 +106,8 @@ var  peopleCollection = new PeopleCollection([
 
 ])
 
-peopleView = new PeopleView({collection : peopleCollection});
+var peopleView = new App.Views.People({collection : peopleCollection});
 $(document.body).html(peopleView.render().el);
 
 
-
+})()
