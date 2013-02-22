@@ -8,7 +8,7 @@
 
 	window.App = {
 		Models : {},
-		Colletions : {},
+		Collections : {},
 		Views : {}
 	}
 
@@ -42,7 +42,7 @@ App.Models.Person = Backbone.Model.extend({
 });
 
 //list of people
-App.Colletions.People = Backbone.Collection.extend({
+App.Collections.People = Backbone.Collection.extend({
 	model : App.Models.Person
 });
 
@@ -55,9 +55,9 @@ App.Views.People = Backbone.View.extend({
 	render : function(){
 	// for each create a new person view
 		this.collection.each(function(person){
-			var personView = new App.View.Person({model : App.Models.Person});
+			var personView = new App.Views.Person({model : person});
 
-			this.$el.append(App.View.Person.render().el);
+			this.$el.append(personView.render().el);
 
 		},this);
 
@@ -67,7 +67,7 @@ App.Views.People = Backbone.View.extend({
 })
 
 //person view
-App.View.Person = Backbone.View.extend({
+App.Views.Person = Backbone.View.extend({
 
 	tagName: "li",
 
@@ -85,7 +85,7 @@ App.View.Person = Backbone.View.extend({
 
 });
 
-App.Colletions.people = new App.Colletions.People([
+var peopleCollection = new App.Collections.People([
 {
 	nombre : 'Daniel',
 	apellido : 'silva',
@@ -106,8 +106,8 @@ App.Colletions.people = new App.Colletions.People([
 
 ])
 
-peopleView = new App.Views.People({collection : App.Colletions.people});
-$(document.body).html(App.Views.People.render().el);
+var peopleView = new App.Views.People({collection : peopleCollection});
+$(document.body).html(peopleView.render().el);
+
 
 })()
-
