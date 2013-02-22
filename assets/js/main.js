@@ -1,4 +1,8 @@
 // main.js
+// final verson of tutorial using templates models views and helpers
+// 
+// 22-02-2013
+// 
 var template = function(id){
 	return _.template( $('#' + id).html() );
 }
